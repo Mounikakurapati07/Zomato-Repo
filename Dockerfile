@@ -1,5 +1,5 @@
 # Use Node.js 16 slim as the base image
-FROM node:16-slim
+FROM node:16-slim as first
 
 # Set the working directory
 WORKDIR /app
@@ -13,6 +13,11 @@ RUN npm install
 # Copy the rest of the application code
 COPY . .
 
+
+
+FROM first as final
+RUN npm install 
+COPY ..
 # Build the React app
 RUN npm run build
 
@@ -21,3 +26,5 @@ EXPOSE 3000
 
 # Start your Node.js server (assuming it serves the React app)
 CMD ["npm", "start"]
+
+
